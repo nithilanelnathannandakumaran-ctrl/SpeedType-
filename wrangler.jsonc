@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "speedtype",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-08",
+
+  // Serves everything in ./public directly (index.html, style.css, script.js).
+  // Cloudflare only hands a request to src/index.js when it doesn't match a
+  // file in here — which in practice means only /api/* routes reach the
+  // Worker script.
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+
+  // D1 database — replace database_id with your own after running:
+  //   wrangler d1 create speedtype-db
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "speedtype-db",
+      "database_id": "REPLACE_WITH_YOUR_DATABASE_ID"
+    }
+  ],
+
+  // Whoever signs up with this username becomes admin automatically.
+  // Change it here (or override in the dashboard under Settings > Variables)
+  // if you want someone other than "elnathan".
+  "vars": {
+    "ADMIN_USERNAME": "elnathan"
+  }
+}

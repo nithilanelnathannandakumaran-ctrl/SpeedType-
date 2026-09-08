@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpeedType</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= AUTH SCREEN ================= -->
+<div id="authScreen">
+  <div class="auth-card">
+    <div class="auth-top">
+      <div class="logo">SPEED<span class="accent-word">TYPE</span></div>
+      <p>Sign in to sync your stats and settings everywhere.</p>
+    </div>
+    <div class="auth-body">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin" type="button">Log in</button>
+        <button class="auth-tab" id="tabSignup" type="button">Sign up</button>
+      </div>
+      <div class="field">
+        <label for="authUsername" id="authUsernameLabel">Username or email</label>
+        <input id="authUsername" type="text" placeholder="e.g. elnathan or you@example.com" maxlength="30" autocomplete="username">
+      </div>
+      <div class="field hidden" id="authEmailField">
+        <label for="authEmail">Email</label>
+        <input id="authEmail" type="email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="btn-block primary" id="authSubmitBtn" type="button">Log in</button>
+      <div class="auth-error" id="authError"></div>
+      <div class="auth-divider"><span>or</span></div>
+      <button class="btn-block ghost" id="guestBtn" type="button">Continue as guest</button>
+      <div class="auth-hint">Guest mode doesn't save stats or settings anywhere. Sign up as <strong>elnathan</strong> to get admin access automatically.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="appRoot" style="display:none;">
+
+<div class="announce-banner hidden" id="announceBanner">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 11l18-7-7 18-2-8-8-3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+  <span id="announceText"></span>
+  <button type="button" id="announceDismiss" aria-label="Dismiss">&times;</button>
+</div>
+
+<div class="topbar">
+  <div class="logo">SPEED<span class="accent-word">TYPE</span></div>
+  <div class="topbar-right">
+    <button class="icon-btn" id="leaderboardBtn" type="button" title="Leaderboard" aria-label="Leaderboard">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 6H4a1 1 0 0 0-1 1c0 2.5 1.8 4.3 4 4.7M17 6h3a1 1 0 0 1 1 1c0 2.5-1.8 4.3-4 4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="pill-btn" id="profileBtn" type="button">Loading...</button>
+    <button class="icon-btn" id="settingsBtn" type="button" title="Settings" aria-label="Settings">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 13.5a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V19.7a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H2.3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09A1.65 1.65 0 0 0 9.3 2.3V2.2a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21.7a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<main>
+  <div class="test-wrap" id="testWrap">
+    <div class="config-bar" id="configBar">
+      <div class="config-group">
+        <button class="config-btn" type="button" data-mode="time">time</button>
+        <button class="config-btn" type="button" data-mode="words">words</button>
+      </div>
+      <div class="config-divider"></div>
+      <div class="config-group" data-group="time-amount">
+        <button class="config-btn" type="button" data-amount="15">15</button>
+        <button class="config-btn" type="button" data-amount="30">30</button>
+        <button class="config-btn" type="button" data-amount="60">60</button>
+        <button class="config-btn" type="button" data-amount="120">120</button>
+      </div>
+      <div class="config-group" data-group="words-amount">
+        <button class="config-btn" type="button" data-amount="10">10</button>
+        <button class="config-btn" type="button" data-amount="25">25</button>
+        <button class="config-btn" type="button" data-amount="50">50</button>
+        <button class="config-btn" type="button" data-amount="100">100</button>
+      </div>
+    </div>
+
+    <div class="stats-live" id="statsLive">
+      <div>
+        <div class="stat-num" id="liveWpmNum">0</div>
+        <div class="stat-label">wpm</div>
+      </div>
+      <div>
+        <div class="stat-num" id="liveStatNum">30</div>
+        <div class="stat-label" id="liveStatLabel">seconds left</div>
+      </div>
+    </div>
+
+    <div class="type-area" id="typeArea" role="textbox" aria-label="Typing test text" aria-multiline="true"></div>
+
+    <div class="type-hint">Just start typing to begin &middot; <kbd>Tab</kbd> for a new test</div>
+  </div>
+
+  <div class="results" id="results">
+    <div class="results-grid">
+      <div class="results-primary">
+        <div class="big-num" id="resWpm">0</div>
+        <div class="big-label">WORDS PER MINUTE</div>
+      </div>
+      <div class="results-secondary">
+        <div>
+          <div class="stat-num" id="resAccuracy">0%</div>
+          <div class="stat-label">accuracy</div>
+        </div>
+        <div>
+          <div class="stat-num" id="resRaw">0</div>
+          <div class="stat-label">raw wpm</div>
+        </div>
+        <div>
+          <div class="stat-num" id="resChars">0/0</div>
+          <div class="stat-label">correct/wrong</div>
+        </div>
+        <div>
+          <div class="stat-num" id="resTime">0s</div>
+          <div class="stat-label">test length</div>
+        </div>
+      </div>
+    </div>
+    <div class="results-graph">
+      <svg id="graphSvg" viewBox="0 0 600 140"></svg>
+    </div>
+    <div class="results-actions">
+      <button class="btn-primary" id="redoBtn" type="button">Try again</button>
+    </div>
+  </div>
+</main>
+
+<!-- ================= settings drawer ================= -->
+<div class="overlay-scrim" id="overlayScrim"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h2>Settings</h2>
+    <button class="icon-btn" id="drawerClose" type="button" aria-label="Close settings">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body">
+
+    <div class="drawer-section">
+      <h3>Theme</h3>
+      <div class="theme-swatches" id="themeSwatches"></div>
+    </div>
+
+    <div class="drawer-section">
+      <h3>Appearance</h3>
+      <div class="option-row">
+        <div><div class="option-row-label">Font</div></div>
+        <div class="select-pill" id="fontPill">
+          <button data-value="jetbrains" type="button">JetBrains</button>
+          <button data-value="consolas" type="button">Consolas</button>
+          <button data-value="courier" type="button">Courier</button>
+        </div>
+      </div>
+      <div class="option-row">
+        <div><div class="option-row-label">Caret style</div></div>
+        <div class="select-pill" id="caretPill">
+          <button data-value="line" type="button">Line</button>
+          <button data-value="block" type="button">Block</button>
+          <button data-value="underline" type="button">Under</button>
+        </div>
+      </div>
+      <div class="option-row">
+        <div>
+          <div class="option-row-label">Smooth caret</div>
+          <div class="option-row-sub">Caret glides between letters</div>
+        </div>
+        <button class="switch" id="smoothCaretSwitch" type="button" role="switch"><span class="switch-knob"></span></button>
+      </div>
+      <div class="option-row">
+        <div>
+          <div class="option-row-label">Key sound</div>
+          <div class="option-row-sub">Soft click on each keystroke</div>
+        </div>
+        <button class="switch" id="soundSwitch" type="button" role="switch"><span class="switch-knob"></span></button>
+      </div>
+      <div class="option-row">
+        <div>
+          <div class="option-row-label">Blind mode</div>
+          <div class="option-row-sub">Blurs the text while typing</div>
+        </div>
+        <button class="switch" id="blindModeSwitch" type="button" role="switch"><span class="switch-knob"></span></button>
+      </div>
+    </div>
+
+    <div class="drawer-section">
+      <h3>Account</h3>
+      <div id="accountBox"></div>
+    </div>
+
+    <div class="drawer-section" id="adminSection" style="display:none;">
+      <h3>Admin</h3>
+      <div id="adminSectionInner"></div>
+    </div>
+
+    <div class="drawer-section admin-panel" id="adminPanel">
+      <h3>Site-wide announcement</h3>
+      <p class="option-row-sub" style="margin-bottom:10px;">Shows as a banner at the top of the page for everyone (including guests) within about 45 seconds.</p>
+      <div class="field">
+        <input id="announceInput" type="text" placeholder="e.g. New word list rolling out this week" maxlength="240">
+      </div>
+      <button class="btn-block primary" id="sendAnnounceBtn" type="button">Post announcement</button>
+      <button class="btn-block danger" id="clearAnnounceBtn" type="button" style="margin-top:8px;">Clear current announcement</button>
+      <div class="form-msg" id="announceMsg"></div>
+
+      <h3 style="margin-top:26px;">All accounts</h3>
+      <table class="admin-table">
+        <thead><tr><th>User</th><th>Best WPM</th><th>Tests</th><th></th></tr></thead>
+        <tbody id="adminTableBody"></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= admin pin modal ================= -->
+<div class="modal-scrim" id="pinModal">
+  <div class="modal-box">
+    <h3 id="pinModalTitle">Enter admin PIN</h3>
+    <p id="pinModalSub">Unlock the admin panel.</p>
+    <input class="pin-input" id="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="••••">
+    <div class="form-msg error" id="pinError"></div>
+    <button class="btn-block primary" id="pinSubmit" type="button">Continue</button>
+    <button class="btn-block ghost" id="pinCancel" type="button" style="margin-top:8px;">Cancel</button>
+  </div>
+</div>
+
+<!-- ================= leaderboard modal ================= -->
+<div class="modal-scrim" id="leaderboardModal">
+  <div class="modal-box" style="max-width:380px;">
+    <h3>Leaderboard</h3>
+    <p>Top speeds across every SpeedType account.</p>
+    <div class="leaderboard-list" id="leaderboardList"></div>
+    <button class="btn-block ghost" id="leaderboardClose" type="button" style="margin-top:14px;">Close</button>
+  </div>
+</div>
+
+</div><!-- /appRoot -->
+
+<script src="script.js"></script>
+</body>
+</html>
