@@ -13,7 +13,7 @@
     "binding": "ASSETS"
   },
 
-  // D1 database — replace database_id with your own after running:
+  // D1 database — 58da7fba-d7de-4ce2-aad2-8ac412a709c4:
   //   wrangler d1 create speedtype-db
   "d1_databases": [
     {
